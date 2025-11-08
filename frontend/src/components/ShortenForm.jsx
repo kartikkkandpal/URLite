@@ -3,7 +3,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-const ShortenForm = ({ setShortUrlData }) => {
+const ShortenForm = ({ setShortUrlData, authenticated = false }) => {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -40,6 +40,12 @@ const ShortenForm = ({ setShortUrlData }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+      {authenticated && (
+        <h3 className="text-xl font-bold text-gray-800 mb-4">
+          Create New Short URL
+        </h3>
+      )}
+
       <form onSubmit={handleSubmit}>
         {/* URL Input */}
         <div className="mb-4">
