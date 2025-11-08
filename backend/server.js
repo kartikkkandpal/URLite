@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import urlRoutes from "./routes/urlRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 // Load environment variables
 dotenv.config();
@@ -21,7 +22,8 @@ app.use(express.json()); // Parse JSON request bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
 // Routes
-app.use("/api", urlRoutes); // API routes for /api/shorten
+app.use("/api/auth", authRoutes); // Authentication routes
+app.use("/api", urlRoutes); // API routes for /api/shorten and /api/urls
 app.use("/", urlRoutes); // Root routes for /:shortCode redirect
 
 // Health check endpoint
