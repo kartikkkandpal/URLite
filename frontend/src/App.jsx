@@ -1,41 +1,88 @@
 // MAIN APP COMPONENT
 
-import { useState } from "react";
-import ShortenForm from "./components/ShortenForm";
-import ShortUrlDisplay from "./components/ShortUrlDisplay";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import Home from "./pages/Home";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+
+// Protected Route Component - redirects to login if not authenticated
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-600">Loading...</p>
+      </div>
+    );
+  }
+
+  return isAuthenticated ? children : <Navigate to="/login" />;
+};
+
+// Public Route Component - redirects to dashboard if already authenticated
+const PublicRoute = ({ children }) => {
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-600">Loading...</p>
+      </div>
+    );
+  }
+
+  return !isAuthenticated ? children : <Navigate to="/dashboard" />;
+};
 
 function App() {
-  // State to store the generated short URL data
-  const [shortUrlData, setShortUrlData] = useState(null);
-
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-purple-50">
-      <div className="container mx-auto px-4 py-16">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-gray-800 mb-4">
-            URL<span className="text-blue-600">ite</span>
-          </h1>
-          <p className="text-gray-600 text-lg">
-            Shorten your long URLs into easy-to-share links
-          </p>
-        </div>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Home />} />
 
-        {/* Main Content */}
-        <div className="max-w-2xl mx-auto">
-          {/* URL Shortening Form */}
-          <ShortenForm setShortUrlData={setShortUrlData} />
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
+            }
+          />
 
-          {/* Display shortened URL if generated */}
-          {shortUrlData && <ShortUrlDisplay data={shortUrlData} />}
-        </div>
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
 
-        {/* Footer */}
-        <div className="text-center mt-16 text-gray-500 text-sm">
-          <p>© 2024 URLite - Simple & Fast URL Shortener</p>
-        </div>
-      </div>
-    </div>
+          {/* Protected Routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 404 - Redirect to home */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
