@@ -1,4 +1,4 @@
-// GENERATE SHORT CODE UTILITY FUNCTION
+// UTILS TO GENERATE SHORT CODE
 
 import { nanoid } from "nanoid";
 
