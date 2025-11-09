@@ -1,6 +1,7 @@
 // URL LIST COMPONENT
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const UrlList = ({ urls, onDelete, onUpdate }) => {
@@ -11,6 +12,7 @@ const UrlList = ({ urls, onDelete, onUpdate }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("newest");
 
+  const navigate = useNavigate();
   const API_URL = "http://localhost:5000/api";
 
   // Copy URL to clipboard
@@ -26,6 +28,11 @@ const UrlList = ({ urls, onDelete, onUpdate }) => {
     } catch (err) {
       console.error("Failed to copy:", err);
     }
+  };
+
+  // Navigate to analytics page
+  const viewAnalytics = (urlId) => {
+    navigate(`/analytics/${urlId}`);
   };
 
   // Start editing title
@@ -347,6 +354,27 @@ const UrlList = ({ urls, onDelete, onUpdate }) => {
 
               {/* Actions */}
               <div className="flex flex-col gap-2">
+                {/* View Analytics Button */}
+                <button
+                  onClick={() => viewAnalytics(url.id)}
+                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium flex items-center justify-center gap-1"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                    />
+                  </svg>
+                  Analytics
+                </button>
+
                 {/* Copy Button */}
                 <button
                   onClick={() => handleCopy(url)}
