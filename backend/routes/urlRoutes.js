@@ -2,8 +2,15 @@
 
 import express from "express";
 import Url from "../models/Url.js";
+import Analytics from "../models/Analytics.js";
 import generateShortCode from "../utils/generateShortCode.js";
 import protect from "../middleware/auth.js";
+import {
+  parseUserAgent,
+  getGeoLocation,
+  parseReferrer,
+  getClientIp,
+} from "../utils/analyticsHelper.js";
 
 const router = express.Router();
 
@@ -227,6 +234,9 @@ router.delete("/urls/:id", protect, async (req, res) => {
         .json({ error: "Not authorized to delete this URL" });
     }
 
+    // Delete associated analytics data
+    await Analytics.deleteMany({ urlId: id });
+
     // Delete the URL
     await Url.findByIdAndDelete(id);
 
@@ -257,7 +267,45 @@ router.get("/:shortCode", async (req, res) => {
     url.clicks += 1;
     await url.save();
 
-    // Redirect to original URL
+    // Track analytics asynchronously (don't block redirect)
+    // This runs in background and doesn't delay the redirect
+    setImmediate(async () => {
+      try {
+        // Get client information
+        const userAgentString = req.headers["user-agent"];
+        const referrerUrl = req.headers["referer"] || req.headers["referrer"];
+        const ipAddress = getClientIp(req);
+
+        // Parse user agent
+        const { device, browser, os } = parseUserAgent(userAgentString);
+
+        // Parse referrer
+        const referrer = parseReferrer(referrerUrl);
+
+        // Get geolocation (async - might be slow)
+        const { country, city } = await getGeoLocation(ipAddress);
+
+        // Create analytics entry
+        const analyticsData = new Analytics({
+          urlId: url._id,
+          referrer,
+          ipAddress,
+          country,
+          city,
+          device,
+          browser,
+          os,
+          userAgent: userAgentString,
+        });
+
+        await analyticsData.save();
+      } catch (analyticsError) {
+        // Don't fail redirect if analytics fails
+        console.error("Analytics tracking error:", analyticsError);
+      }
+    });
+
+    // Redirect to original URL immediately
     res.redirect(url.originalUrl);
   } catch (error) {
     console.error("Error redirecting:", error);
