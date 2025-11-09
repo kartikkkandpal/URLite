@@ -26,6 +26,26 @@ const urlSchema = new mongoose.Schema({
     default: null, // Null for anonymous users
   },
 
+  // Optional title/description for the URL
+  title: {
+    type: String,
+    trim: true,
+    default: null,
+  },
+
+  // Custom alias chosen by user (if any)
+  customAlias: {
+    type: String,
+    trim: true,
+    default: null,
+  },
+
+  // Flag to indicate if this is a custom alias
+  isCustom: {
+    type: Boolean,
+    default: false,
+  },
+
   // Track number of times this link was clicked
   clicks: {
     type: Number,
@@ -44,6 +64,9 @@ urlSchema.index({ shortCode: 1 });
 
 // Index on userId for faster user-specific queries
 urlSchema.index({ userId: 1 });
+
+// Index on customAlias for validation
+urlSchema.index({ customAlias: 1 }, { sparse: true });
 
 const Url = mongoose.model("Url", urlSchema);
 
