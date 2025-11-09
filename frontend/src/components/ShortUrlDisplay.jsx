@@ -40,7 +40,41 @@ const ShortUrlDisplay = ({ data }) => {
           </svg>
         </div>
         <h3 className="text-2xl font-bold text-gray-800">URL Shortened!</h3>
+
+        {/* Custom Alias Badge */}
+        {data.isCustom && (
+          <div className="mt-3">
+            <span className="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 text-purple-700 text-sm font-medium rounded-full">
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                />
+              </svg>
+              Custom Alias Created
+            </span>
+          </div>
+        )}
       </div>
+
+      {/* Title (if provided) */}
+      {data.title && (
+        <div className="mb-6">
+          <label className="block text-gray-600 text-sm font-medium mb-2">
+            Title
+          </label>
+          <div className="p-3 bg-purple-50 rounded-lg border border-purple-200">
+            <p className="text-purple-800 font-medium">{data.title}</p>
+          </div>
+        </div>
+      )}
 
       {/* Original URL */}
       <div className="mb-6">
@@ -59,7 +93,9 @@ const ShortUrlDisplay = ({ data }) => {
         </label>
         <div className="flex gap-2">
           <div className="flex-1 p-3 bg-blue-50 rounded-lg border border-blue-200">
-            <p className="text-blue-600 font-medium">{data.shortUrl}</p>
+            <p className="text-blue-600 font-medium break-all">
+              {data.shortUrl}
+            </p>
           </div>
 
           {/* Copy Button */}
@@ -111,9 +147,54 @@ const ShortUrlDisplay = ({ data }) => {
       </div>
 
       {/* Additional Info */}
-      <div className="text-center text-gray-500 text-sm">
-        <p>Created: {new Date(data.createdAt).toLocaleString()}</p>
+      <div className="border-t pt-4">
+        <div className="flex items-center justify-between text-sm text-gray-500">
+          <div className="flex items-center gap-4">
+            <span className="flex items-center gap-1">
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              {new Date(data.createdAt).toLocaleString()}
+            </span>
+            <span className="flex items-center gap-1">
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
+                />
+              </svg>
+              {data.clicks || 0} clicks
+            </span>
+          </div>
+        </div>
       </div>
+
+      {/* Quick actions info */}
+      {data.isCustom && (
+        <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+          <p className="text-blue-800 text-sm">
+            ✨ Your custom alias <strong>{data.customAlias}</strong> is now live
+            and ready to share!
+          </p>
+        </div>
+      )}
     </div>
   );
 };
