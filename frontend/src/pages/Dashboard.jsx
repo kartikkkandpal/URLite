@@ -49,6 +49,12 @@ const Dashboard = () => {
     setUrls([newUrl, ...urls]);
   };
 
+  // Handle URL updated
+  const handleUrlUpdated = (updatedUrl) => {
+    // Update the URL in the list
+    setUrls(urls.map((url) => (url.id === updatedUrl.id ? updatedUrl : url)));
+  };
+
   // Handle URL deleted
   const handleUrlDeleted = (deletedId) => {
     // Remove deleted URL from list
@@ -190,7 +196,11 @@ const Dashboard = () => {
                 <p className="text-red-600">{error}</p>
               </div>
             ) : (
-              <UrlList urls={urls} onDelete={handleUrlDeleted} />
+              <UrlList
+                urls={urls}
+                onDelete={handleUrlDeleted}
+                onUpdate={handleUrlUpdated}
+              />
             )}
           </div>
         </div>
