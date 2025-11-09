@@ -1,7 +1,7 @@
 // DASHBOARD PAGE
 
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import axios from "axios";
 import ShortenForm from "../components/ShortenForm";
@@ -62,20 +62,29 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen bg-linear-to-br from-teal-50 to-green-50 pt-20">
       {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-4">
+      <header className="bg-white/90 backdrop-blur-sm shadow-lg fixed top-4 left-8 right-8 z-50 rounded-2xl">
+        <div className="container mx-auto px-6 py-3">
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-gray-800">
-              URL<span className="text-blue-600">ite</span>
-            </h1>
+            <div className="flex items-center">
+              <img src="/logo.png" alt="Logo" className="h-8 w-8 mr-2" />
+              <h1 className="text-3xl font-bold text-gray-800">
+                URL<span className="text-green-700">ite</span>
+              </h1>
+            </div>
 
-            <div className="flex items-center gap-4">
-              <div className="text-right">
-                <p className="text-sm text-gray-600">Welcome back,</p>
-                <p className="font-medium text-gray-800">{user?.name}</p>
+            <div className="flex items-center gap-3">
+              <Link
+                to="/"
+                className="px-4 py-2 text-green-700 font-medium hover:text-green-800 transition-colors"
+              >
+                Home
+              </Link>
+              <div className="text-right hidden md:block">
+                <p className="font-medium text-black-800">{user?.name}</p>
               </div>
+
               <button
                 onClick={handleLogout}
                 className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-medium"

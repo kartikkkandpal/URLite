@@ -92,8 +92,8 @@ const ShortUrlDisplay = ({ data }) => {
           Short URL
         </label>
         <div className="flex gap-2">
-          <div className="flex-1 p-3 bg-blue-50 rounded-lg border border-blue-200">
-            <p className="text-blue-600 font-medium break-all">
+          <div className="flex-1 p-3 bg-green-50 rounded-lg border border-green-200">
+            <p className="text-green-800 font-medium break-all">
               {data.shortUrl}
             </p>
           </div>
@@ -103,8 +103,8 @@ const ShortUrlDisplay = ({ data }) => {
             onClick={handleCopy}
             className={`px-6 py-3 rounded-lg font-medium transition-colors ${
               copied
-                ? "bg-green-600 text-white"
-                : "bg-blue-600 text-white hover:bg-blue-700"
+                ? "bg-green-500 text-white"
+                : "bg-green-700 text-white hover:bg-green-800"
             }`}
           >
             {copied ? (
@@ -188,8 +188,8 @@ const ShortUrlDisplay = ({ data }) => {
 
       {/* Quick actions info */}
       {data.isCustom && (
-        <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-          <p className="text-blue-800 text-sm">
+        <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+          <p className="text-green-800 text-sm">
             ✨ Your custom alias <strong>{data.customAlias}</strong> is now live
             and ready to share!
           </p>

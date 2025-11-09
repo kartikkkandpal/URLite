@@ -94,7 +94,7 @@ const Analytics = () => {
       <div className="min-h-screen bg-linear-gradient-to-br from-blue-50 to-purple-50">
         <div className="flex items-center justify-center h-screen">
           <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mb-4"></div>
             <p className="text-gray-600 text-lg">Loading analytics...</p>
           </div>
         </div>
@@ -104,7 +104,7 @@ const Analytics = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-linear-gradient-to-br from-blue-50 to-purple-50">
+      <div className="min-h-screen bg-linear-to-br from-teal-50 to-green-50">
         <div className="flex items-center justify-center h-screen">
           <div className="text-center">
             <svg
@@ -123,7 +123,7 @@ const Analytics = () => {
             <p className="text-red-600 text-lg mb-4">{error}</p>
             <Link
               to="/dashboard"
-              className="text-blue-600 hover:underline font-medium"
+              className="text-green-600 hover:underline font-medium"
             >
               Back to Dashboard
             </Link>
@@ -134,15 +134,15 @@ const Analytics = () => {
   }
 
   return (
-    <div className="min-h-screen bg-linear-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen bg-linear-to-br from-teal-50 to-green-50 mt-10">
       {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-4">
+      <header className="bg-white/90 backdrop-blur-sm shadow-lg fixed top-4 left-8 right-8 z-50 rounded-2xl">
+        <div className="container mx-auto px-6 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link
                 to="/dashboard"
-                className="text-blue-600 hover:text-blue-700 transition-colors"
+                className="text-green-700 hover:text-green-800 transition-colors"
               >
                 <svg
                   className="w-6 h-6"
@@ -172,14 +172,14 @@ const Analytics = () => {
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-16">
         <div className="max-w-7xl mx-auto">
           {/* URL Info Card */}
-          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <div className="bg-white/90 backdrop-blur-sm shadow-lg rounded-2xl p-6 mb-8">
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 {url.title && (
-                  <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                  <h2 className="text-3xl font-bold text-gray-800 mb-2">
                     {url.title}
                   </h2>
                 )}
@@ -188,7 +188,7 @@ const Analytics = () => {
                     href={url.shortUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-700 font-medium text-lg"
+                    className="text-gray-700 underline hover:text-gray-800 font-medium text-lg truncate block"
                   >
                     {url.shortUrl}
                   </a>
@@ -198,7 +198,7 @@ const Analytics = () => {
                 </p>
               </div>
               {url.isCustom && (
-                <span className="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 text-purple-700 text-sm font-medium rounded-full">
+                <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-500 text-sm font-medium rounded-full">
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -221,7 +221,7 @@ const Analytics = () => {
           {/* Summary Stats */}
           {summary && (
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-gray-600 text-sm mb-1">Total Clicks</p>
@@ -328,9 +328,9 @@ const Analytics = () => {
 
           {/* Timeline Chart */}
           <div className="mb-8">
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6">
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
-                <h3 className="text-xl font-bold text-gray-800">
+                <h3 className="text-2xl font-bold text-gray-800">
                   Click Trends Over Time
                 </h3>
                 <div className="flex gap-3">
@@ -340,7 +340,7 @@ const Analytics = () => {
                       onClick={() => setChartType("bar")}
                       className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
                         chartType === "bar"
-                          ? "bg-white text-blue-600 shadow-sm"
+                          ? "bg-white text-green-700 shadow-sm"
                           : "text-gray-600 hover:text-gray-800"
                       }`}
                     >
@@ -350,7 +350,7 @@ const Analytics = () => {
                       onClick={() => setChartType("line")}
                       className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
                         chartType === "line"
-                          ? "bg-white text-blue-600 shadow-sm"
+                          ? "bg-white text-green-700 shadow-sm"
                           : "text-gray-600 hover:text-gray-800"
                       }`}
                     >
@@ -362,7 +362,7 @@ const Analytics = () => {
                   <select
                     value={timeRange}
                     onChange={(e) => setTimeRange(parseInt(e.target.value))}
-                    className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-800 text-sm"
                   >
                     <option value={7}>Last 7 days</option>
                     <option value={30}>Last 30 days</option>
@@ -385,16 +385,18 @@ const Analytics = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             {/* Devices Pie Chart */}
             {devices.length > 0 && (
-              <AnalyticsChart
-                type="pie"
-                data={deviceChartData}
-                title="Device Distribution"
-              />
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6">
+                <AnalyticsChart
+                  type="pie"
+                  data={deviceChartData}
+                  title="Device Distribution"
+                />
+              </div>
             )}
 
             {/* Referrers */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-4">
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6">
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">
                 Top Referrers
               </h3>
               {referrers.length > 0 ? (
@@ -418,7 +420,7 @@ const Analytics = () => {
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <div
-                            className="bg-blue-500 h-2 rounded-full transition-all"
+                            className="bg-green-700 h-2 rounded-full transition-all"
                             style={{ width: `${percentage}%` }}
                           />
                         </div>
@@ -437,8 +439,8 @@ const Analytics = () => {
           {/* Additional Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Locations */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-4">
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6">
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">
                 Top Locations
               </h3>
               {locations.length > 0 ? (
@@ -446,7 +448,7 @@ const Analytics = () => {
                   {locations.map((loc, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                      className="flex items-center justify-between p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors"
                     >
                       <div className="flex items-center gap-2">
                         <span className="text-2xl">
@@ -462,7 +464,7 @@ const Analytics = () => {
                           {loc.country}
                         </span>
                       </div>
-                      <span className="font-bold text-purple-600">
+                      <span className="font-bold text-green-700">
                         {loc.count}
                       </span>
                     </div>
@@ -476,8 +478,8 @@ const Analytics = () => {
             </div>
 
             {/* Browsers */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-4">
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6">
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">
                 Top Browsers
               </h3>
               {browsers.length > 0 ? (
@@ -500,7 +502,7 @@ const Analytics = () => {
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <div
-                            className="bg-orange-500 h-2 rounded-full transition-all"
+                            className="bg-green-700 h-2 rounded-full transition-all"
                             style={{ width: `${percentage}%` }}
                           />
                         </div>

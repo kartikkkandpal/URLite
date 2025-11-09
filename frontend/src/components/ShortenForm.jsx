@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const ShortenForm = ({ setShortUrlData, authenticated = false }) => {
   const [url, setUrl] = useState("");
@@ -75,8 +76,8 @@ const ShortenForm = ({ setShortUrlData, authenticated = false }) => {
             id="url"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            placeholder="https://example.com/very/long/url/here"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="https://example.com"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-transparent"
             required
           />
         </div>
@@ -87,7 +88,7 @@ const ShortenForm = ({ setShortUrlData, authenticated = false }) => {
             <button
               type="button"
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm"
+              className="flex items-center gap-2 text-green-700 hover:text-green-800 font-medium text-sm"
             >
               <svg
                 className={`w-4 h-4 transition-transform ${
@@ -118,7 +119,7 @@ const ShortenForm = ({ setShortUrlData, authenticated = false }) => {
                 htmlFor="title"
                 className="block text-gray-700 font-medium mb-2"
               >
-                Title (Optional)
+                Title
               </label>
               <input
                 type="text"
@@ -126,7 +127,7 @@ const ShortenForm = ({ setShortUrlData, authenticated = false }) => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="My Important Link"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-transparent"
               />
               <p className="text-gray-500 text-xs mt-1">
                 Add a description to help you remember this link
@@ -139,11 +140,11 @@ const ShortenForm = ({ setShortUrlData, authenticated = false }) => {
                 htmlFor="customAlias"
                 className="block text-gray-700 font-medium mb-2"
               >
-                Custom Alias (Optional)
+                Custom Alias
               </label>
               <div className="flex items-center gap-2">
                 <span className="text-gray-600 text-sm">
-                  {import.meta.env.BASE_URL || "http://localhost:5000"}/
+                  {import.meta.env.VITE_BASE_URL || "http://localhost:5000"}
                 </span>
                 <input
                   type="text"
@@ -152,7 +153,7 @@ const ShortenForm = ({ setShortUrlData, authenticated = false }) => {
                   onChange={(e) => setCustomAlias(e.target.value.toLowerCase())}
                   placeholder="my-custom-link"
                   pattern="[a-zA-Z0-9_-]{3,30}"
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-transparent"
                 />
               </div>
               <p className="text-gray-500 text-xs mt-1">
@@ -164,10 +165,13 @@ const ShortenForm = ({ setShortUrlData, authenticated = false }) => {
 
         {/* Info message for anonymous users */}
         {!authenticated && (
-          <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-blue-800 text-sm">
-              💡 <strong>Sign up</strong> to use custom aliases and add titles
-              to your links!
+          <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+            <p className="text-green-800 text-sm">
+              💡{" "}
+              <Link to="/register" className="font-medium underline">
+                Sign up
+              </Link>{" "}
+              to use custom aliases and add titles to your links!
             </p>
           </div>
         )}
@@ -183,7 +187,7 @@ const ShortenForm = ({ setShortUrlData, authenticated = false }) => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:bg-blue-400 disabled:cursor-not-allowed"
+          className="w-full bg-green-700 text-white py-3 rounded-lg font-medium hover:bg-green-800 transition-colors disabled:bg-green-400 disabled:cursor-not-allowed"
         >
           {loading ? "Shortening..." : "Shorten URL"}
         </button>

@@ -151,7 +151,7 @@ const UrlList = ({ urls, onDelete, onUpdate }) => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search by URL, code, or title..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-800"
               />
               <svg
                 className="absolute left-3 top-2.5 w-5 h-5 text-gray-400"
@@ -174,7 +174,7 @@ const UrlList = ({ urls, onDelete, onUpdate }) => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-800"
             >
               <option value="newest">Newest First</option>
               <option value="oldest">Oldest First</option>
@@ -208,7 +208,7 @@ const UrlList = ({ urls, onDelete, onUpdate }) => {
                         value={editTitle}
                         onChange={(e) => setEditTitle(e.target.value)}
                         placeholder="Enter title..."
-                        className="flex-1 px-3 py-1 border border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="flex-1 px-3 py-1 border border-green-500 rounded focus:outline-none focus:ring-2 focus:ring-green-800"
                         autoFocus
                       />
                       <button
@@ -234,7 +234,7 @@ const UrlList = ({ urls, onDelete, onUpdate }) => {
                         </h4>
                         <button
                           onClick={() => startEdit(url)}
-                          className="text-gray-400 hover:text-blue-600"
+                          className="text-gray-400 hover:text-green-600"
                           title="Edit title"
                         >
                           <svg
@@ -260,7 +260,7 @@ const UrlList = ({ urls, onDelete, onUpdate }) => {
                 {!url.title && editingId !== url.id && (
                   <button
                     onClick={() => startEdit(url)}
-                    className="text-sm text-blue-600 hover:text-blue-700 mb-2 flex items-center gap-1"
+                    className="text-sm text-green-600 hover:text-green-700 mb-2 flex items-center gap-1"
                   >
                     <svg
                       className="w-4 h-4"
@@ -282,7 +282,7 @@ const UrlList = ({ urls, onDelete, onUpdate }) => {
                 {/* Custom Alias Badge */}
                 {url.isCustom && (
                   <div className="mb-2">
-                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded">
+                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-500 text-xs font-medium rounded">
                       <svg
                         className="w-3 h-3"
                         fill="none"
@@ -303,12 +303,14 @@ const UrlList = ({ urls, onDelete, onUpdate }) => {
 
                 {/* Short URL */}
                 <div className="mb-3">
-                  <p className="text-sm text-gray-600 mb-1">Short URL</p>
+                  <p className="text-xs font-bold text-gray-500 mb-1">
+                    SHORT URL
+                  </p>
                   <a
                     href={url.shortUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-700 font-medium text-lg truncate block"
+                    className="text-black underline hover:text-gray-800 font-medium text-lg truncate block"
                   >
                     {url.shortUrl}
                   </a>
@@ -316,14 +318,16 @@ const UrlList = ({ urls, onDelete, onUpdate }) => {
 
                 {/* Original URL */}
                 <div className="mb-3">
-                  <p className="text-sm text-gray-600 mb-1">Original URL</p>
+                  <p className="text-xs font-bold text-gray-500 mb-1">
+                    ORIGINAL URL
+                  </p>
                   <p className="text-gray-700 text-sm truncate">
                     {url.originalUrl}
                   </p>
                 </div>
 
                 {/* Meta Info */}
-                <div className="flex items-center gap-4 text-sm text-gray-500">
+                <div className="flex items-center gap-4 text-xs font-medium text-gray-700">
                   <span className="flex items-center gap-1">
                     <svg
                       className="w-4 h-4"
@@ -364,7 +368,7 @@ const UrlList = ({ urls, onDelete, onUpdate }) => {
                 {/* View Analytics Button */}
                 <button
                   onClick={() => viewAnalytics(url.id)}
-                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium flex items-center justify-center gap-1"
+                  className="px-4 py-2 bg-blue-300 text-white rounded-lg hover:bg-blue-400 transition-colors text-sm font-medium flex items-center justify-center gap-1"
                 >
                   <svg
                     className="w-4 h-4"
@@ -409,8 +413,8 @@ const UrlList = ({ urls, onDelete, onUpdate }) => {
                   onClick={() => handleCopy(url)}
                   className={`px-4 py-2 rounded-lg font-medium transition-colors text-sm ${
                     copiedId === url.id
-                      ? "bg-green-600 text-white"
-                      : "bg-blue-600 text-white hover:bg-blue-700"
+                      ? "bg-green-500 text-white"
+                      : "bg-green-600 text-white hover:bg-green-700"
                   }`}
                 >
                   {copiedId === url.id ? (

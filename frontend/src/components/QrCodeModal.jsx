@@ -37,7 +37,7 @@ const QRCodeModal = ({ urlId, shortUrl, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
@@ -80,15 +80,19 @@ const QRCodeModal = ({ urlId, shortUrl, onClose }) => {
 
             {/* URL Info */}
             <div className="mb-4">
-              <p className="text-sm text-gray-600 mb-1">Short URL</p>
-              <p className="text-blue-600 font-medium break-all">{shortUrl}</p>
+              <p className="text-sm font font-medium text-gray-600 mb-1">
+                SHORT URL
+              </p>
+              <p className="text-green-800 font-bold underline break-all">
+                {shortUrl}
+              </p>
             </div>
 
             {/* Actions */}
             <div className="flex gap-3">
               <button
                 onClick={handleDownload}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-800 transition-colors font-medium flex items-center justify-center gap-2"
               >
                 <svg
                   className="w-5 h-5"
@@ -114,7 +118,7 @@ const QRCodeModal = ({ urlId, shortUrl, onClose }) => {
             </div>
 
             {/* Info Text */}
-            <p className="text-xs text-gray-500 text-center mt-4">
+            <p className="text-xs text-gray-700 text-center mt-4">
               Scan this QR code with a smartphone to access your short URL
             </p>
           </>

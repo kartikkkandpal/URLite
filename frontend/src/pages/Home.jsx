@@ -11,26 +11,29 @@ const Home = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <div className="min-h-screen bg-linear-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen bg-linear-to-br from-teal-50 to-green-50 pt-10">
       {/* Header/Navigation */}
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-4">
+      <header className="bg-white/90 backdrop-blur-sm shadow-lg fixed top-4 left-8 right-8 z-50 rounded-2xl">
+        <div className="container mx-auto px-6 py-3">
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-gray-800">
-              URL<span className="text-blue-600">ite</span>
-            </h1>
+            <div className="flex items-center">
+              <img src="/logo.png" alt="Logo" className="h-8 w-8 mr-2" />
+              <h1 className="text-3xl font-bold text-gray-800">
+                URL<span className="text-green-700">ite</span>
+              </h1>
+            </div>
 
             {!isAuthenticated && (
               <div className="flex gap-3">
                 <Link
                   to="/login"
-                  className="px-5 py-2 text-blue-600 font-medium hover:text-blue-700 transition-colors"
+                  className="px-5 py-2 text-green-700 font-medium hover:text-green-800 transition-colors"
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
-                  className="px-5 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                  className="px-5 py-2 bg-green-700 text-white rounded-lg font-medium hover:bg-green-800 transition-colors"
                 >
                   Sign Up
                 </Link>
@@ -40,7 +43,7 @@ const Home = () => {
             {isAuthenticated && (
               <Link
                 to="/dashboard"
-                className="px-5 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                className="px-5 py-2 bg-green-700 text-white rounded-lg font-medium hover:bg-green-800 transition-colors"
               >
                 Go to Dashboard
               </Link>
@@ -61,8 +64,8 @@ const Home = () => {
           </p>
 
           {!isAuthenticated && (
-            <div className="inline-block bg-blue-50 border border-blue-200 rounded-lg px-4 py-2">
-              <p className="text-blue-800 text-sm">
+            <div className="inline-block bg-green-50 border border-green-200 rounded-lg px-4 py-2">
+              <p className="text-green-800 text-sm">
                 💡{" "}
                 <Link to="/register" className="font-medium underline">
                   Sign up
@@ -168,8 +171,55 @@ const Home = () => {
       </div>
 
       {/* Footer */}
-      <footer className="text-center py-8 text-gray-500 text-sm">
-        <p>© 2024 URLite - Simple & Fast URL Shortener</p>
+      <footer className="bg-white/80 backdrop-blur-sm mt-2 py-4">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <img src="/logo.png" alt="URLite logo" className="h-10 w-10" />
+              <p className="text-gray-800 text-sm">
+                © {new Date().getFullYear()} URLite - Tiny Links. Big Impact.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-6">
+              <div className="flex gap-3">
+                <a
+                  href="https://www.linkedin.com/in/kartikkkandpal/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-800"
+                  aria-label="LinkedIn"
+                >
+                  <svg
+                    className="w-7 h-7"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11.75 19h-2.5v-9h2.5v9zm-1.25-10.29c-.8 0-1.45-.65-1.45-1.45 0-.8.65-1.45 1.45-1.45s1.45.65 1.45 1.45c0 .8-.65 1.45-1.45 1.45zm12 10.29h-2.5v-4.5c0-1.07-.02-2.45-1.5-2.45-1.5 0-1.73 1.17-1.73 2.37v4.58h-2.5v-9h2.4v1.23h.03c.34-.64 1.17-1.32 2.4-1.32 2.56 0 3.03 1.69 3.03 3.89v5.2z" />
+                  </svg>
+                </a>
+
+                <a
+                  href="https://github.com/kartikkkandpal"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-800"
+                  aria-label="GitHub"
+                >
+                  <svg
+                    className="w-7 h-7"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 .5a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.5-4-1.5-.6-1.6-1.4-2-1.4-2-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.4 3.6 1.1.1-.9.4-1.4.7-1.7-2.7-.3-5.6-1.4-5.6-6.1 0-1.4.5-2.5 1.2-3.4-.1-.3-.5-1.6.1-3.4 0 0 1-.3 3.4 1.3a11.6 11.6 0 016.2 0c2.4-1.6 3.4-1.3 3.4-1.3.6 1.8.2 3.1.1 3.4.8.9 1.2 2 1.2 3.4 0 4.7-2.9 5.8-5.6 6.1.4.4.8 1 .8 2v3c0 .3.2.7.8.6A12 12 0 0012 .5z" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
   );

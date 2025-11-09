@@ -21,7 +21,7 @@ connectDB();
 // Middleware
 app.use(cors()); // Enable CORS for frontend requests
 app.use(express.json()); // Parse JSON request bodies
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
+app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use("/api/auth", authRoutes); // Authentication routes
@@ -40,3 +40,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`URLite Server running on port ${PORT}`);
 });
+
+export default app;
