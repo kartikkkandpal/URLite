@@ -143,7 +143,7 @@ const ShortenForm = ({ setShortUrlData, authenticated = false }) => {
               </label>
               <div className="flex items-center gap-2">
                 <span className="text-gray-600 text-sm">
-                  {process.env.BASE_URL || "http://localhost:5000"}/
+                  {import.meta.env.BASE_URL || "http://localhost:5000"}/
                 </span>
                 <input
                   type="text"
