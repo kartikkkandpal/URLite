@@ -29,10 +29,18 @@ const optionalAuth = async (req, res, next) => {
   next();
 };
 
+// Validate custom alias format
+const validateAlias = (alias) => {
+  // Only alphanumeric, hyphens, and underscores allowed
+  // Length between 3-30 characters
+  const aliasPattern = /^[a-zA-Z0-9_-]{3,30}$/;
+  return aliasPattern.test(alias);
+};
+
 // POST /api/shorten - Create a shortened URL (supports both authenticated and anonymous users)
 router.post("/shorten", optionalAuth, async (req, res) => {
   try {
-    const { originalUrl } = req.body;
+    const { originalUrl, customAlias, title } = req.body;
 
     // Validate that URL is provided
     if (!originalUrl) {
@@ -47,23 +55,58 @@ router.post("/shorten", optionalAuth, async (req, res) => {
       });
     }
 
-    // Generate unique short code
-    let shortCode = generateShortCode();
+    let shortCode;
+    let isCustom = false;
 
-    // Check if short code already exists (rare collision)
-    let existingUrl = await Url.findOne({ shortCode });
+    // Handle custom alias if provided
+    if (customAlias) {
+      // Only authenticated users can use custom aliases
+      if (!req.user) {
+        return res.status(401).json({
+          error: "Please login to use custom aliases",
+        });
+      }
 
-    // Regenerate if collision occurs
-    while (existingUrl) {
+      // Validate custom alias format
+      if (!validateAlias(customAlias)) {
+        return res.status(400).json({
+          error:
+            "Invalid alias format. Use 3-30 characters (letters, numbers, hyphens, underscores only)",
+        });
+      }
+
+      // Check if custom alias already exists
+      const existingAlias = await Url.findOne({ shortCode: customAlias });
+      if (existingAlias) {
+        return res.status(400).json({
+          error: "This custom alias is already taken. Please choose another.",
+        });
+      }
+
+      shortCode = customAlias;
+      isCustom = true;
+    } else {
+      // Generate unique short code
       shortCode = generateShortCode();
-      existingUrl = await Url.findOne({ shortCode });
+
+      // Check if short code already exists (rare collision)
+      let existingUrl = await Url.findOne({ shortCode });
+
+      // Regenerate if collision occurs
+      while (existingUrl) {
+        shortCode = generateShortCode();
+        existingUrl = await Url.findOne({ shortCode });
+      }
     }
 
-    // Create new URL document with optional userId
+    // Create new URL document
     const newUrl = new Url({
       originalUrl,
       shortCode,
-      userId: req.user ? req.user._id : null, // Associate with user if logged in
+      userId: req.user ? req.user._id : null,
+      title: title || null,
+      customAlias: customAlias || null,
+      isCustom,
     });
 
     // Save to database
@@ -77,6 +120,9 @@ router.post("/shorten", optionalAuth, async (req, res) => {
         originalUrl: newUrl.originalUrl,
         shortCode: newUrl.shortCode,
         shortUrl: `${process.env.BASE_URL}/${newUrl.shortCode}`,
+        title: newUrl.title,
+        customAlias: newUrl.customAlias,
+        isCustom: newUrl.isCustom,
         clicks: newUrl.clicks,
         createdAt: newUrl.createdAt,
       },
@@ -103,12 +149,60 @@ router.get("/urls", protect, async (req, res) => {
         originalUrl: url.originalUrl,
         shortCode: url.shortCode,
         shortUrl: `${process.env.BASE_URL}/${url.shortCode}`,
+        title: url.title,
+        customAlias: url.customAlias,
+        isCustom: url.isCustom,
         clicks: url.clicks,
         createdAt: url.createdAt,
       })),
     });
   } catch (error) {
     console.error("Error fetching URLs:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// PUT /api/urls/:id - Update URL title (Protected)
+router.put("/urls/:id", protect, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title } = req.body;
+
+    // Find URL by ID
+    const url = await Url.findById(id);
+
+    // Check if URL exists
+    if (!url) {
+      return res.status(404).json({ error: "URL not found" });
+    }
+
+    // Check if user owns this URL
+    if (url.userId.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .json({ error: "Not authorized to update this URL" });
+    }
+
+    // Update title
+    url.title = title || null;
+    await url.save();
+
+    res.json({
+      success: true,
+      data: {
+        id: url._id,
+        originalUrl: url.originalUrl,
+        shortCode: url.shortCode,
+        shortUrl: `${process.env.BASE_URL}/${url.shortCode}`,
+        title: url.title,
+        customAlias: url.customAlias,
+        isCustom: url.isCustom,
+        clicks: url.clicks,
+        createdAt: url.createdAt,
+      },
+    });
+  } catch (error) {
+    console.error("Error updating URL:", error);
     res.status(500).json({ error: "Server error" });
   }
 });
