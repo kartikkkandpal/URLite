@@ -23,7 +23,7 @@ const Analytics = () => {
   const [timeRange, setTimeRange] = useState(7);
   const [chartType, setChartType] = useState("bar");
 
-  const API_URL = "http://localhost:5000/api";
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
   // Fetch all analytics data
   const fetchAnalytics = async () => {

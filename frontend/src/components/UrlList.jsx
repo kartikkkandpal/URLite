@@ -15,7 +15,7 @@ const UrlList = ({ urls, onDelete, onUpdate }) => {
   const [qrModalUrl, setQrModalUrl] = useState(null);
 
   const navigate = useNavigate();
-  const API_URL = "http://localhost:5000/api";
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
   // Copy URL to clipboard
   const handleCopy = async (url) => {
